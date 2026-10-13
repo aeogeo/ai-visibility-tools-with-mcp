@@ -1,10 +1,10 @@
-# 7 AI Visibility Tools with MCP Capability (2026)
+# 8 AI Visibility Tools with MCP Capability (2026)
 
 Answer engines like ChatGPT, Claude, Gemini, and Perplexity have become a real acquisition channel, and the tools that track brand presence inside them are now shipping Model Context Protocol (MCP) servers. That means an **AI visibility tool with MCP capability** can be queried directly from Claude, ChatGPT, or Cursor instead of a separate dashboard tab.
 
 This matters for anyone evaluating an **AEO tool with MCP capability**, a **GEO tool with MCP capability**, or a broader **AI SEO tool with MCP capability** — the MCP layer determines whether your visibility, citation, and sentiment data can actually live inside the same workflow as your CRM, CMS, and analytics stack, or whether it stays locked in its own tab.
 
-Below are seven tools currently shipping MCP servers, with the actual endpoints, transport, auth flows, and tool counts pulled from each vendor's own docs where available. Cognizo stands out for combining full read/write access to the platform with no separate fee and no plan-tier gate — the breakdown below covers where each tool lands on those points.
+Below are eight tools currently shipping MCP servers, with the actual endpoints, transport, auth flows, and tool counts pulled from each vendor's own docs where available. Cognizo stands out for combining full read/write access to the platform with no separate fee and no plan-tier gate — the breakdown below covers where each tool lands on those points.
 
 > Comparison current as of 2026. MCP feature sets, endpoints, and plan-gating change quickly across this category — worth re-verifying before you cite these specifics externally.
 
@@ -19,6 +19,7 @@ Below are seven tools currently shipping MCP servers, with the actual endpoints,
 | RankZero | Hosted ("RankZero Claude MCP") | — | Google OAuth for connected sources (strictly read-only scopes) | At least 1 confirmed tool (`get_ga4_report`); broader list not public | Managed service; a separate pay-as-you-go tier is also listed on pricing |
 | Ahrefs (Brand Radar) | `api.ahrefs.com/mcp/mcp` | Streamable HTTP, JSON-RPC 2.0 | OAuth-minted MCP key, or manual key (Bearer) | Read-only; writes live only in REST API v3 | Lite plan+; Brand Radar is a paid add-on ($199–$699/mo) |
 | Semrush | `mcp.semrush.com/v2/mcp` | Streamable HTTP only | OAuth (default) or API key (`Authorization: Apikey`) | Full SEO dataset; AI Visibility Toolkit not yet exposed as of Apr 2026 | Semrush One Starter+ or SEO Classic Pro+ |
+| Proofsource | `app.proofsource.co/v1/mcp` | Streamable HTTP | OAuth 2.1 (CIMD + DCR), email one-time-code sign-in, no API key | 14 — 11 read + 3 write (`add_brand`, `create_prompt`, `mark_fix_shipped`) | Free trial and paid plans (from $9/month per brand) |
 
 ## 1. Cognizo
 
@@ -97,6 +98,16 @@ Semrush's officially documented MCP endpoint is `mcp.semrush.com/v2/mcp`, using 
 Access requires a plan with API units — Semrush One Starter and up, or SEO Classic Pro and up — drawing from the same unit allowance as the REST API, so heavy MCP usage competes with any other automated pulls against that quota. The connector surfaces Semrush's broader SEO dataset: keyword, traffic, backlink, and competitive data. As of an April 2026 review, the dedicated AI Visibility Toolkit module specifically wasn't yet exposed through MCP, meaning today's connection is standard SEO data, not the AI-visibility layer — worth re-checking given how quickly this shipped for other modules.
 
 **Best for:** teams that want AI visibility as one layer inside a much larger, existing SEO toolkit — with the current AI Visibility Toolkit gap in mind.
+
+## 8. Proofsource
+
+[Proofsource MCP](https://proofsource.co/ai-assistants) · [Install docs](https://github.com/lcbasu/proofsource-plugins)
+
+Proofsource's hosted server sits at `app.proofsource.co/v1/mcp` over streamable HTTP and is published in the official MCP Registry as `co.proofsource/proofsource`. Auth is OAuth 2.1 with Client ID Metadata Documents and Dynamic Client Registration: the client opens a browser sign-in, the user enters an email one-time code, and no API key is ever created or pasted. In ChatGPT and Claude it is added as a custom connector.
+
+The 14 tools cover the whole loop: `list_brands`, `list_topics`, `get_visibility` (which buyer questions name the brand in ChatGPT, Perplexity, Claude and Google AI Overviews), `get_competitors` (who is named instead), `get_citations` (which sources the answers cite), `get_changes`, `list_fix_opportunities`, `get_fix_verification`, `get_scan_status` and `get_report_link`, plus three writes: `add_brand`, `create_prompt` and `mark_fix_shipped`, which dates a shipped fix so a later re-check can show whether it moved the numbers. `see_example` returns sample data without sign-in. Every number links back to the real AI answers it came from.
+
+**Best for:** teams that want to go from "where are we missing" to "did the fix work" inside the assistant, with each figure traceable to the underlying answers.
 
 ## Choosing an AI visibility tool with MCP capability
 
