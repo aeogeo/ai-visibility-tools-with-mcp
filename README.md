@@ -19,6 +19,7 @@ Below are seven tools currently shipping MCP servers, with the actual endpoints,
 | RankZero | Hosted ("RankZero Claude MCP") | — | Google OAuth for connected sources (strictly read-only scopes) | At least 1 confirmed tool (`get_ga4_report`); broader list not public | Managed service; a separate pay-as-you-go tier is also listed on pricing |
 | Ahrefs (Brand Radar) | `api.ahrefs.com/mcp/mcp` | Streamable HTTP, JSON-RPC 2.0 | OAuth-minted MCP key, or manual key (Bearer) | Read-only; writes live only in REST API v3 | Lite plan+; Brand Radar is a paid add-on ($199–$699/mo) |
 | Semrush | `mcp.semrush.com/v2/mcp` | Streamable HTTP only | OAuth (default) or API key (`Authorization: Apikey`) | Full SEO dataset; AI Visibility Toolkit not yet exposed as of Apr 2026 | Semrush One Starter+ or SEO Classic Pro+ |
+| Howseen | `app.howseen.ai/api/mcp` | Streamable HTTP (stateless) | Personal API key, `Authorization: Bearer` (created in Settings > API & AI assistants); `tools/list` works without a key | 44: 26 read + 18 write | Pro and Business plans |
 
 ## 1. Cognizo
 
@@ -97,6 +98,16 @@ Semrush's officially documented MCP endpoint is `mcp.semrush.com/v2/mcp`, using 
 Access requires a plan with API units — Semrush One Starter and up, or SEO Classic Pro and up — drawing from the same unit allowance as the REST API, so heavy MCP usage competes with any other automated pulls against that quota. The connector surfaces Semrush's broader SEO dataset: keyword, traffic, backlink, and competitive data. As of an April 2026 review, the dedicated AI Visibility Toolkit module specifically wasn't yet exposed through MCP, meaning today's connection is standard SEO data, not the AI-visibility layer — worth re-checking given how quickly this shipped for other modules.
 
 **Best for:** teams that want AI visibility as one layer inside a much larger, existing SEO toolkit — with the current AI Visibility Toolkit gap in mind.
+
+## 8. Howseen
+
+[Howseen MCP](https://howseen.ai/mcp) · [MCP Registry entry](https://registry.modelcontextprotocol.io/v0/servers?search=howseen)
+
+Howseen's hosted server sits at `app.howseen.ai/api/mcp` over Streamable HTTP in stateless mode (one transport per request, JSON responses, no session). Authentication is a personal API key sent as `Authorization: Bearer`, created in the dashboard under Settings > API & AI assistants; `initialize` and `tools/list` answer without a key, so the tool surface can be inspected before signing up. The server is also published in the official MCP Registry as `ai.howseen/howseen-mcp`.
+
+It exposes 44 tools: 26 read tools (visibility per engine, prompts, competitors, top cited sources, AI fan-out queries, sentiment, action plan, site audit, Search Console and analytics data, AI referrals) and 18 write tools that act on the account: add or archive prompts, add or remove competitors, run a scan, draft or refresh an article, publish it to the connected CMS, request indexing, mark an action done, create a share report. Tracked engines on the Pro plan are ChatGPT, Gemini, Perplexity, Google AI Overviews and Google AI Mode, with Claude added on Business.
+
+**Best for:** teams that want the tracking data and the content workflow (from a lost prompt to a published, indexed article) in the same MCP connection.
 
 ## Choosing an AI visibility tool with MCP capability
 
